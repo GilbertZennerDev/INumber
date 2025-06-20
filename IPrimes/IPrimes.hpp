@@ -6,7 +6,7 @@
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:38:55 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/20 17:14:29 by gzenner          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:31:58 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@
 class IPrimes
 {
     private:
-        size_t number;
-        std::deque<size_t> primes;
-        std::deque<size_t> allPrimes;
+        unsigned long long number;
+        std::deque<unsigned long long> primes;
+        std::deque<unsigned long long> allPrimes;
     public:
         IPrimes();
-        IPrimes(size_t);
+        IPrimes(unsigned long long);
         ~IPrimes();
 
-        bool IsPrime(size_t nb);
+        bool IsPrime(unsigned long long nb);
         void getPrimes();
         void collectAllPrimes();
         void displayPrimes();

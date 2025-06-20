@@ -6,7 +6,7 @@
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 16:44:36 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/20 17:23:26 by gzenner          ###   ########.fr       */
+/*   Updated: 2025/06/20 17:31:58 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ IPrimes::IPrimes()
     
 }
 
-IPrimes::IPrimes(size_t number): number(number)
+IPrimes::IPrimes(unsigned long long number): number(number)
 {
     collectAllPrimes();
     getPrimes();
@@ -29,9 +29,9 @@ IPrimes::~IPrimes()
     primes.clear();
 }
 
-bool IPrimes::IsPrime(size_t nb)
+bool IPrimes::IsPrime(unsigned long long nb)
 {
-    for(size_t i=2; i <= nb / i; i++)
+    for(unsigned long long i=2; i <= nb / i; i++)
     {
         if (nb % i == 0)
         {
@@ -43,7 +43,7 @@ bool IPrimes::IsPrime(size_t nb)
 
 void IPrimes::collectAllPrimes()
 {
-    for(size_t nb = 2; nb <= number / nb + 1; nb++)
+    for(unsigned long long nb = 2; nb <= number / nb + 1; nb++)
     {
         if (IsPrime(nb))
         {
@@ -55,8 +55,8 @@ void IPrimes::collectAllPrimes()
 
 void IPrimes::getPrimes()
 {
-    size_t nb = number;
-    for(std::deque<size_t>::iterator it = allPrimes.begin(); it != allPrimes.end(); it++)
+    unsigned long long nb = number;
+    for(std::deque<unsigned long long>::iterator it = allPrimes.begin(); it != allPrimes.end(); it++)
     {
         while (nb % *it == 0)
         {
@@ -68,7 +68,7 @@ void IPrimes::getPrimes()
 
 void IPrimes::displayPrimes()
 {
-    for(std::deque<size_t>::iterator it = primes.begin(); it != primes.end(); it++)
+    for(std::deque<unsigned long long>::iterator it = primes.begin(); it != primes.end(); it++)
     {
         std::cout<<"Prime:" << *it << "\n";
     }
