@@ -12,61 +12,17 @@
 
 #include "INumber.hpp"
 
-int INumber::getInt(size_t index)
+void INumber::addINumber(INumber& copy)
 {
-    if (index < digits.size())
-        return (digits[index] - '0');
-    else
-        return (0);
-}
-
-void INumber::handleAddOverflow(int *result, int *rest)
-{
-    *rest = 0;
-    if (*result > 9)
+    /*
+    need to implement check for billion* is NULL
+    */
+    unsigned int value;
+    std::map<int, Billion*>::iterator it;
+    for(it = _billions.begin(); it != _billions.end(); it++)
     {
-        *result -= 10;
-        *rest += 1;
-    }
-}
-
-void INumber::multiply(std::string newnbr)
-{
-    
-}
-
-void INumber::add(std::string newnbr)
-{
-    // I want to add a simple number to mine
-    // keeping it simple, let us assume there is no overflow
-}
-
-void INumber::add(INumber& otherINumber)
-{
-    int result;
-    int rest;
-    size_t i;
-
-    getNumSize(&i, otherINumber);
-    printDebug("getNumSize", "");
-    std::cout<<i<<'\n';
-    rest = 0;
-    while(i > 0)
-    {
-        result = getInt(i - 1) + otherINumber.getInt(i - 1) + rest;// - 2*'0';
-        if (result > 9)
-            handleAddOverflow(&result, &rest);
-        else
-        {
-            result += rest;
-            handleAddOverflow(&result, &rest);
-        }
-        digits[i - 1] = result + '0';
-        --i;
-    }
-    if (rest > 0)
-    {
-        digits.push_front(rest + '0');
-        rest = 0;
+        value = getValue(it->first) + copy.getValue(it->first);
+        _billions[it->first]->setValue(value);
+        std::cout << "[debug adding]:" << _billions[it->first]->getValue() << "\n";
     }
 }

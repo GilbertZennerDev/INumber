@@ -5,29 +5,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 08:22:46 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/24 17:42:02 by gzenner          ###   ########.fr       */
+/*   Created: 2025/06/24 11:47:00 by gzenner           #+#    #+#             */
+/*   Updated: 2025/06/24 12:51:36 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "INumber.hpp"
+#include "Billion.hpp"
 
-int main()
+int testBillion()
 {
-    std::string nbr;
-
-    //nbr = "-";
-    
-    INumber nb;
-    nb.addBillion(111111111, 0);
-    nb.addBillion(111111111, 1);
-    nb.addBillion(111111111, 2);
-
-    INumber nb2;
-    nb2.addBillion(123412341, 0);
-    nb2.addBillion(123412341, 1);
-    nb2.addBillion(123412341, 2);
-    nb.addINumber(nb2);
-    
+    Billion b1;
+    Billion b2 = Billion(b1);
+    Billion b3;
+    b3 = b2;
     return (0);
 }

@@ -10,50 +10,26 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <deque>
+#include <map>
 #include <iostream>
+#include <exception>
+#include "Billion/Billion.hpp"
+
+class Billion;
 
 class INumber
 {
     private:
-        int comma_pos;
-        bool sign;
-        std::deque<char> digits;
-        std::deque<char> filled;
+        bool _sign;
+        std::map<int , Billion *> _billions;
     public:
         INumber();
-        INumber(std::string nbr);
         INumber(INumber const& copy);
         INumber& operator=(INumber const& copy);
-        ~INumber();  
+        ~INumber();
+        void addBillion(unsigned int value, int index);
 
-        void setFilled(std::deque<char>& newfilled);
-        std::deque<char>& getDigits();
-
-        void FillWith0(INumber& target, size_t num_size);
-
-        void pushInput(size_t limit, bool back);
-        
-        void push_back(char nbr);
-        void push_front(char nbr);
-
-        void push_back_filled(char nbr);
-        void push_front_filled(char nbr);
-
-        void MakeFilled(INumber& otherINumber, size_t num_size);
-        
-        void handleAddOverflow(int *result, int *rest);
-        
-        int getInt(size_t index);
-        size_t getSize();
-        
-        void add(INumber& otherINumber);
-        
-        void add(std::string newnbr);
-        void multiply(std::string newnbr);
-
-        void getNumSize(size_t *num_size, INumber& otherINumber);
-        
-        void printDigits();
-        void printDebug(std::string prefix, std::string msg);
+        void addINumber(INumber& copy);
+        unsigned int getValue(int index);
+        void setValue(unsigned int newvalue, int index);
 };

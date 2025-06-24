@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tester.cpp                                         :+:      :+:    :+:   */
+/*   Billion.hpp                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/20 08:22:46 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/24 17:42:02 by gzenner          ###   ########.fr       */
+/*   Created: 2025/06/24 11:42:17 by gzenner           #+#    #+#             */
+/*   Updated: 2025/06/24 16:43:55 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "INumber.hpp"
-
-int main()
+class Billion
 {
-    std::string nbr;
+    private:
+        unsigned int _value;
+        int _index;
+    public:
+        Billion();
+        Billion(unsigned int, int);
+        Billion(Billion const& copy);
+        Billion& operator=(Billion const& copy);
+        ~Billion();
 
-    //nbr = "-";
-    
-    INumber nb;
-    nb.addBillion(111111111, 0);
-    nb.addBillion(111111111, 1);
-    nb.addBillion(111111111, 2);
-
-    INumber nb2;
-    nb2.addBillion(123412341, 0);
-    nb2.addBillion(123412341, 1);
-    nb2.addBillion(123412341, 2);
-    nb.addINumber(nb2);
-    
-    return (0);
-}
+        int getIndex();
+        unsigned int getValue();
+        void setValue(unsigned int);
+};

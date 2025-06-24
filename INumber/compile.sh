@@ -1,1 +1,1 @@
-c++ *.cpp && clear && ./a.out
+c++ *.cpp Billion/*.cpp && clear && ./a.out

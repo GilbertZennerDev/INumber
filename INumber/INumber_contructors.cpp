@@ -12,49 +12,31 @@
 
 #include "INumber.hpp"
 
-INumber::INumber()
-{
-    sign = true;
-    comma_pos = -1;
-}
-
-INumber::INumber(std::string nbr)
-{
-    size_t i;
-    
-    comma_pos = -1;
-    sign = nbr[0] == '-';
-    i = 1;
-    while(i < nbr.size())
-    {
-        if (nbr[i] == '.')
-        {
-            comma_pos = i;
-        }
-        else
-        {
-            digits.push_back(nbr[i]);
-        }
-        ++i;
-    }
-}
+INumber::INumber(): _sign(true){}
 
 INumber::INumber(INumber const& copy)
 {
-    this->digits = copy.digits;
+    this->_billions = copy._billions;
 }
 
 INumber& INumber::operator=(INumber const& copy)
 {
     if (this != &copy)
     {
-        this->digits = copy.digits;
+        //delete this->billions;
+        //this->billions = new 
+        this->_billions = copy._billions;
     }
     return *this;
 }
 
 INumber::~INumber()
 {
-    digits.clear();
+    std::map<int, Billion*>::iterator it;
+    for(it = _billions.begin(); it != _billions.end(); it++)
+    {
+        //delete (it->second);
+    }
+    _billions.clear();
 }
 
