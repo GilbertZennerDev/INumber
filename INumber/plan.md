@@ -23,3 +23,7 @@ now for adding another INumber
 INumber nb2(nb); //copy constructor
 
 nb + nb2 = 246824682, 0
+
+-----
+
+I truly need to be able to read numbers from files and also save them
