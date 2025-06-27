@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Billion.hpp                                        :+:      :+:    :+:   */
+/*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/24 11:42:17 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/27 12:09:20 by gzenner          ###   ########.fr       */
+/*   Created: 2025/06/26 17:43:22 by gzenner           #+#    #+#             */
+/*   Updated: 2025/06/26 17:50:47 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-class Billion
+void dummy()
 {
-    private:
-        unsigned int _value;
-        int _index;
-    public:
-        Billion();
-        Billion(unsigned int, int);
-        Billion(Billion const& copy);
-        Billion& operator=(Billion const& copy);
-        ~Billion();
+    return (0);
+}
 
-        int getIndex();
-        unsigned int getValue();
-        void setValue(unsigned int);
-};
+int main()
+{
+    dummy();
+    return (0);
+}

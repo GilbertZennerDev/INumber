@@ -28,7 +28,26 @@ INumber::INumber(int nb)
     _sign = (nb >= 0);
     if (!_sign)
         nb *= -1;
-    for(int i = -1000; i < 1000; i++)
+    //for(int i = -1000; i < 1000; i++)
+    addBillion(static_cast<unsigned int>(nb), 0);
+}
+
+INumber::INumber(int nb, int lower_limit, int upper_limit)
+{
+    int tmp;
+
+    _sign = (nb >= 0);
+    if (!_sign)
+        nb *= -1;
+    if (lower_limit > upper_limit)
+    {
+        tmp = lower_limit;
+        lower_limit = upper_limit;
+        upper_limit = tmp;
+    }
+    if (lower_limit == upper_limit)
+        upper_limit++;
+    for(int i = lower_limit; i < upper_limit; i++)
         addBillion(static_cast<unsigned int>(nb), i);
 }
 
@@ -46,7 +65,12 @@ INumber::INumber(INumber const& copy)
 {
     std::map<int, Billion*>::const_iterator it;
     for(it = copy._billions.begin(); it != copy._billions.end(); it++)
-        this->_billions[it->first] = new Billion(it->second->getValue(), it->second->getIndex());   
+    {
+        if (it->second->getValue() != 0)
+        {
+            this->_billions[it->first] = new Billion(it->second->getValue(), it->first);
+        }
+    }
 }
 
 INumber& INumber::operator=(INumber const& copy)

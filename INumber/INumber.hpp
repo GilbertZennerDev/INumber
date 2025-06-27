@@ -17,6 +17,8 @@
 #include <string>
 #include "Billion/Billion.hpp"
 
+#define BILLION 1000*1000*1000
+
 class Billion;
 
 class INumber
@@ -29,14 +31,14 @@ class INumber
         // Coplien Form plus other Constructors
         INumber();
         INumber(int);
+        INumber(int nb, int lower_limit, int upper_limit);
         INumber(double);
         INumber(std::string filename);
         INumber(std::string filename, unsigned int linenumber);
         INumber(INumber const& copy);
         ~INumber();
 
-       // Arithmetic Operations with other INumber
-
+        // Arithmetic Operations with other INumber
         INumber& operator=(INumber const& copy);
         INumber& operator+(INumber& copy);
         INumber& operator-(INumber& copy);
@@ -44,7 +46,7 @@ class INumber
         double divideINumber(INumber& copy);
 
         // Tools
-        void addBillion(unsigned int value, int index); // adds 1 Billion with given value at given index
+        void addBillion(unsigned int value, int index); // adds 1 Billion with given value at given index if the Billion is not yet set
         void overwriteBillion(unsigned int value, int index); // adds 1 Billion with given value at given index
 
         // Scalar Operations
@@ -57,9 +59,11 @@ class INumber
 
         // SETTERS
         void setValue(unsigned int newvalue, int index);
+        void addValue(unsigned int addvalue, int index);
 
         // DEBUG AND INFO
         void printBillions();
         void printBillion(int);
-        void printMsg(std::string prefix, std::string msg);
+        static void printMsg(std::string prefix, std::string msg);
+        void printBillionsSize();
 };

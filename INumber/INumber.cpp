@@ -45,6 +45,11 @@ void INumber::setValue(unsigned int newvalue, int index)
     _billions[index]->setValue(newvalue);
 }
 
+void INumber::addValue(unsigned int addvalue, int index)
+{
+    _billions[index]->setValue((unsigned int)getValue(index) + addvalue);
+}
+
 Billion* INumber::getBillion(int index)
 {
     return (_billions[index]);
@@ -82,4 +87,9 @@ void INumber::printBillion(int index)
 void INumber::printMsg(std::string prefix, std::string msg)
 {
     std::cout << "[debug: " << prefix << " ]: ." << msg << ".\n";
+}
+
+void INumber::printBillionsSize()
+{
+    std::cout << "Size of Billions: " << _billions.size() << "\n";
 }

@@ -111,6 +111,12 @@ double INumber::divideINumber(INumber& copy)
 
 void INumber::multiplyScalar(int scalar)
 {
+    unsigned int overflow;
+    unsigned int product;
+    unsigned int localresult;
+    double tmp;
+
+    overflow = 0;
     if (scalar < 0)
     {
         _sign = !_sign;
@@ -119,7 +125,25 @@ void INumber::multiplyScalar(int scalar)
     std::map<int, Billion*>::iterator it;
     for (it = _billions.begin(); it != _billions.end(); it++)
     {
-        it->second->setValue(it->second->getValue() * scalar);
+        std::cout<<"[debug value]" << it->second->getValue() << "\n";
+        std::cout<<"[debug product]" << it->second->getValue() * scalar << "\n";
+        product = it->second->getValue() * scalar;
+        if (product >= BILLION)
+        {
+            localresult = it->second->getValue() * scalar - BILLION;
+            std::cout<<"[debug localresult]" << localresult << "\n";
+            tmp = (it->second->getValue() * scalar - localresult);
+            std::cout<<"[debug tmp]" << tmp << "\n";
+            tmp /= BILLION;
+            std::cout<<"[debug tmp]" << tmp << "\n";
+        }
+    }
+    if (overflow)
+    {
+        //std::cout << "[debug overflow]" << overflow << "\n";
+        /*it = _billions.end();
+        addBillion(overflow, it->first + 1); // need to add at the top
+        overflow = 0;*/
     }
 }
 
