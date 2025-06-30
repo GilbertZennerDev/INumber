@@ -112,38 +112,25 @@ double INumber::divideINumber(INumber& copy)
 void INumber::multiplyScalar(int scalar)
 {
     unsigned int overflow;
-    unsigned int product;
-    unsigned int localresult;
-    double tmp;
-
-    overflow = 0;
+    // let me think this over. I want to find the solution bu myself but with your assistance.
     if (scalar < 0)
     {
         _sign = !_sign;
-        scalar *= -1;
+        scalar *= -1;    
     }
+    overflow = 0;
     std::map<int, Billion*>::iterator it;
     for (it = _billions.begin(); it != _billions.end(); it++)
     {
-        std::cout<<"[debug value]" << it->second->getValue() << "\n";
-        std::cout<<"[debug product]" << it->second->getValue() * scalar << "\n";
-        product = it->second->getValue() * scalar;
-        if (product >= BILLION)
+        unsigned int value = it->second->getValue() * scalar + overflow;
+        overflow = 0;
+        if (value >= 1000*1000*1000)
         {
-            localresult = it->second->getValue() * scalar - BILLION;
-            std::cout<<"[debug localresult]" << localresult << "\n";
-            tmp = (it->second->getValue() * scalar - localresult);
-            std::cout<<"[debug tmp]" << tmp << "\n";
-            tmp /= BILLION;
-            std::cout<<"[debug tmp]" << tmp << "\n";
+            overflow = value / (BILLION);
+            std::cout << "[debug overflow]" << overflow << "\n";
+            value %= HUNDREDMILLIONS;
         }
-    }
-    if (overflow)
-    {
-        //std::cout << "[debug overflow]" << overflow << "\n";
-        /*it = _billions.end();
-        addBillion(overflow, it->first + 1); // need to add at the top
-        overflow = 0;*/
+        it->second->setValue(value);
     }
 }
 

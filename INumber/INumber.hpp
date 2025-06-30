@@ -18,6 +18,7 @@
 #include "Billion/Billion.hpp"
 
 #define BILLION 1000*1000*1000
+#define HUNDREDMILLIONS 100*1000*1000
 
 class Billion;
 

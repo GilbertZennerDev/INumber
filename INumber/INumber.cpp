@@ -47,7 +47,29 @@ void INumber::setValue(unsigned int newvalue, int index)
 
 void INumber::addValue(unsigned int addvalue, int index)
 {
-    _billions[index]->setValue((unsigned int)getValue(index) + addvalue);
+    // the purpose is to add a new value to the current billion
+    unsigned int overflow;
+    unsigned int sum;
+
+    // ERROR CHECKING
+    
+    if (addvalue == 0)
+        return ;
+    if (getBillion(index) == NULL)
+        addBillion(0, index);
+
+    overflow = 0;
+    sum = getValue(index) + addvalue;
+    if (sum >= BILLION)
+    {
+        overflow = sum / (BILLION);
+        sum %= (HUNDREDMILLIONS);
+    }
+    setValue(sum, index);
+    if (overflow)
+    {
+        addValue(overflow, index + 1);
+    }
 }
 
 Billion* INumber::getBillion(int index)

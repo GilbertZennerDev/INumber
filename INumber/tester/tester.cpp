@@ -6,7 +6,7 @@
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:22:46 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/27 17:09:53 by gzenner          ###   ########.fr       */
+/*   Updated: 2025/06/30 14:58:30 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,18 @@ void testConstructors()
 void Circle()
 {
     //INumber nb("../numberfiles/pi_small.txt");
-    INumber nb(3.141592);
-    nb.multiplyScalar(8);
+    INumber nb(3.2);
+    nb.multiplyScalar(5);
     //nb.addValue(1, 0);
+    nb.printBillions();
+}
+
+void testAddValue()
+{
+    INumber nb;
+    nb.addValue(1000*1000*1000-1, 0);
+    nb.printBillions();
+    nb.addValue(1, 0);
     nb.printBillions();
 }
 

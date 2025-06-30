@@ -14,6 +14,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <cctype>
+
+bool IsValidNumber(std::string nb)
+{
+    std::string::iterator it;
+    for(it = nb.begin(); it != nb.end(); it++)
+    {
+        if (!isdigit(*it) && *it != '.' && *it != ',')
+        {
+            return (false);
+        }
+    }
+    return (true);
+}
 
 INumber::INumber(): _sign(true)
 {
@@ -108,6 +122,11 @@ INumber::INumber(std::string filename, unsigned int linenumber)
 
     while(getline(file, number))
     {
+        if (!IsValidNumber(number))
+        {
+            printMsg("[input error]", "[bad number in file]");
+            return ;
+        }
         if (linenumber == 0)
             break;
         --linenumber;
@@ -145,7 +164,14 @@ INumber::INumber(std::string filename)
     int comma;
 
     while(getline(file, line))
+    {
         number += line;
+        if (!IsValidNumber(line))
+        {
+            printMsg("[input error]", "[bad number in file]");
+            return ;
+        }
+    }
     comma = number.find_first_of(".,");
     if (comma != number.find_last_of(".,"))
     {
