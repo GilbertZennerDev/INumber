@@ -43,9 +43,14 @@ INumber& INumber::operator+(INumber& copy)
             }
             _billions[it->first]->setValue(value);
             if (overflow)
-                _billions[it->first + 1]->setValue(_billions[it->first + 1]->getValue() + 1);
+            {
+                addValue(1, it->first + 1);
+            }
+                //_billions[it->first + 1]->setValue(_billions[it->first + 1]->getValue() + 1);
             if (value != 0)
+            {
                 std::cout << "[debug adding]:" << _billions[it->first]->getValue() << "\n";
+            }
         }
     }
     return (*this);
@@ -111,8 +116,9 @@ double INumber::divideINumber(INumber& copy)
 
 void INumber::multiplyScalar(int scalar)
 {
+    unsigned int value;
     unsigned int overflow;
-    // let me think this over. I want to find the solution bu myself but with your assistance.
+
     if (scalar < 0)
     {
         _sign = !_sign;
@@ -122,14 +128,17 @@ void INumber::multiplyScalar(int scalar)
     std::map<int, Billion*>::iterator it;
     for (it = _billions.begin(); it != _billions.end(); it++)
     {
-        unsigned int value = it->second->getValue() * scalar + overflow;
+        value = it->second->getValue() * scalar + overflow;
+        //std::cout << "[debug value1]" << value << "\n";
         overflow = 0;
         if (value >= 1000*1000*1000)
         {
             overflow = value / (BILLION);
-            std::cout << "[debug overflow]" << overflow << "\n";
-            value %= HUNDREDMILLIONS;
+            //std::cout << "[debug overflow]" << overflow << "\n";
+            value %= (BILLION);
+            //std::cout << "[debug value3]" << value << "\n";
         }
+        //std::cout << "[debug value2]" << value << "\n";
         it->second->setValue(value);
     }
 }

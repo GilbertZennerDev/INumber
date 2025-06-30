@@ -6,7 +6,7 @@
 /*   By: gzenner <gzenner@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/20 08:22:46 by gzenner           #+#    #+#             */
-/*   Updated: 2025/06/30 14:58:30 by gzenner          ###   ########.fr       */
+/*   Updated: 2025/06/30 17:23:11 by gzenner          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void Circle()
 {
     //INumber nb("../numberfiles/pi_small.txt");
     INumber nb(3.2);
-    nb.multiplyScalar(5);
+    nb.multiplyScalar(3); //
     //nb.addValue(1, 0);
     nb.printBillions();
 }
@@ -58,8 +58,19 @@ void testAddValue()
     nb.printBillions();
 }
 
+void addingINbs()
+{
+    INumber nb(3.14);
+    INumber nb2(0.04);
+    INumber nb3;
+
+    nb3 = nb + nb2;
+    nb3.printBillions();
+}
+
 int main()
 {
-    Circle();
+    //Circle();
+    addingINbs();
     return (0);
 }
