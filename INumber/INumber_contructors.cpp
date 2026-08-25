@@ -21,7 +21,7 @@ bool IsValidNumber(std::string nb)
     std::string::iterator it;
     for(it = nb.begin(); it != nb.end(); it++)
     {
-        if (!isdigit(*it) && *it != '.' && *it != ',')
+        if (!isdigit(*it) && *it != '.' && *it != ',' && !(it == nb.begin() && *it == '-'))
         {
             return (false);
         }
@@ -31,10 +31,6 @@ bool IsValidNumber(std::string nb)
 
 INumber::INumber(): _sign(true)
 {
-    for(int i = -1000; i < 1000; i++)
-    {
-        //_billions[i] = NULL;
-    }
 }
 
 INumber::INumber(int nb)
@@ -42,7 +38,6 @@ INumber::INumber(int nb)
     _sign = (nb >= 0);
     if (!_sign)
         nb *= -1;
-    //for(int i = -1000; i < 1000; i++)
     addBillion(static_cast<unsigned int>(nb), 0);
 }
 
@@ -70,47 +65,27 @@ INumber::INumber(double nb)
     _sign = (nb >= 0);
     if (!_sign)
         nb *= -1;
-    std::cout << "[debug double]:" << (unsigned int)nb << " and " << nb - (unsigned int)nb << "\n";
     addBillion((unsigned int)nb, 0);
-    addBillion((nb - (unsigned int)nb)*1000*1000*1000, -1);
+    addBillion((unsigned int)((nb - (unsigned int)nb) * (1000.0 * 1000.0 * 1000.0) + 0.5), -1);
 }
 
-INumber::INumber(INumber const& copy)
+INumber::INumber(INumber const& copy): _sign(copy._sign), _int(copy._int), _frac(copy._frac)
 {
-    std::map<int, Billion*>::const_iterator it;
-    for(it = copy._billions.begin(); it != copy._billions.end(); it++)
-    {
-        if (it->second->getValue() != 0)
-        {
-            this->_billions[it->first] = new Billion(it->second->getValue(), it->first);
-        }
-    }
 }
 
 INumber& INumber::operator=(INumber const& copy)
 {
     if (this != &copy)
     {
-        std::map<int, Billion*>::const_iterator it;
-        for(it = _billions.begin(); it != _billions.end(); it++)
-        {
-            delete (it->second);
-        }
-        for(it = copy._billions.begin(); it != copy._billions.end(); it++)
-        {
-            this->_billions[it->first] = new Billion(it->second->getValue(), it->second->getIndex());   
-        }
+        _sign = copy._sign;
+        _int = copy._int;
+        _frac = copy._frac;
     }
     return (*this);
 }
 
 INumber::~INumber()
 {
-    std::map<int, Billion*>::iterator it;
-    for(it = _billions.begin(); it != _billions.end(); it++)
-    {
-        delete (it->second);
-    }
 }
 
 INumber::INumber(std::string filename, unsigned int linenumber)
@@ -131,7 +106,9 @@ INumber::INumber(std::string filename, unsigned int linenumber)
             break;
         --linenumber;
     }
-    _sign = (number[0] != '-');
+    _sign = (number.empty() || number[0] != '-');
+    if (!_sign)
+        number.erase(0, 1);
     comma = number.find_first_of(".,");
     comma2 = number.find_last_of(".,");
     if (comma != comma2)
@@ -143,6 +120,8 @@ INumber::INumber(std::string filename, unsigned int linenumber)
     {
         std::string beforecomma = number.substr(0, comma);
         std::string aftercomma = number.substr(comma + 1);
+        while (aftercomma.size() < 9)
+            aftercomma += "0";
         addBillion(atol(beforecomma.c_str()), 0);
         addBillion(atol(aftercomma.c_str()), -1);
     }
@@ -172,6 +151,9 @@ INumber::INumber(std::string filename)
             return ;
         }
     }
+    _sign = (number.empty() || number[0] != '-');
+    if (!_sign)
+        number.erase(0, 1);
     comma = number.find_first_of(".,");
     if (comma != number.find_last_of(".,"))
     {
@@ -189,13 +171,16 @@ INumber::INumber(std::string filename)
             addBillion(atol(beforecomma.substr(beforecomma.size() - 9).c_str()), index++);
             beforecomma.erase(beforecomma.size() - 9);
         }
-        addBillion(atol(beforecomma.c_str()), index++);
+        if (!beforecomma.empty())
+            addBillion(atol(beforecomma.c_str()), index++);
         index = -1;
         while(aftercomma.size() > 9)
         {
             addBillion(atol(aftercomma.substr(0, 9).c_str()), index--);
             aftercomma.erase(0, 9);
         }
+        while (aftercomma.size() < 9)
+            aftercomma += "0";
         addBillion(atol(aftercomma.c_str()), index--);
     }
     else
@@ -206,7 +191,8 @@ INumber::INumber(std::string filename)
             addBillion(atol(number.substr(number.size() - 9).c_str()), index++);
             number.erase(number.size() - 9);
         }
-        addBillion(atol(number.c_str()), index++);
+        if (!number.empty())
+            addBillion(atol(number.c_str()), index++);
     }
     
     file.close();

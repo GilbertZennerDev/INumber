@@ -12,9 +12,9 @@
 
 #include "Billion.hpp"
 
-Billion::Billion(): _index(0), _value(0){}
-Billion::Billion(unsigned int value, int index): _index(index), _value(value){}
-Billion::Billion(Billion const& copy): _index(copy._index), _value(copy._value){}
+Billion::Billion(): _value(0), _index(0){}
+Billion::Billion(unsigned int value, int index): _value(value), _index(index){}
+Billion::Billion(Billion const& copy): _value(copy._value), _index(copy._index){}
 Billion& Billion::operator=(Billion const& copy){
     if(this != &copy)
     {
